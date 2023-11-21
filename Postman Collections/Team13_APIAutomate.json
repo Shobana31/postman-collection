@@ -1,0 +1,3760 @@
+{
+	"info": {
+		"_postman_id": "64483439-3e87-466d-93f1-f95e20d3d972",
+		"name": "DieticianE2EFlow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "UnHappy Path_User Login_Verify user login with invalid email or password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test('Verify Status code is 401', function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"})\r",
+							"pm.test(\"Status message is Unauthorized\", function () {\r",
+							"    pm.response.to.have.status(\"Unauthorized\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "39e57b8d-34dc-471b-ada3-6bec1e7ae5e7"
+					}
+				}
+			],
+			"id": "3dea86bf-92e6-4d2f-8428-61b0eccc66d2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"Energy75\",\n  \"userLoginEmail\": \"dshobanca@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{BaseUrl}}/login",
+				"description": "This API endpoint is used to perform a login operation. It is an HTTP POST request sent to the {{BaseUrl}}/login URL.\n\nThe request should include the necessary parameters with invalid email or username is required for authentication. The server will validate the provided credentials and return a response.\n\nThe last execution of this request returned a response with a status code of 401 Unauthorized."
+			},
+			"response": [
+				{
+					"id": "a049d482-4422-4f24-b642-815f517a81ee",
+					"name": "OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"<string>\",\n  \"userLoginEmail\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/login"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"loginUserEmail\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"token\": \"<string>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<long>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "HappyPath_User Login _Verify User logged in successfully with valid email and password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test('Verify Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Verify User Id is a number\", function () {   \r",
+							"    pm.expect(jsonData.userId).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test('Verify token is not empty', function () {\r",
+							"    pm.expect(jsonData.token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify loginUserEmail is not empty', function () {\r",
+							"    pm.expect(jsonData.loginUserEmail).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify roles is an array', function () {\r",
+							"    pm.expect(jsonData.roles).to.be.an('array');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify User Role, is Dietician', () => {\r",
+							"    pm.expect(jsonData.roles).to.include(\"ROLE_DIETICIAN\");\r",
+							" \r",
+							"})\r",
+							"\r",
+							"pm.test('Set token', function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(jsonData.token);\r",
+							"    pm.globals.set('Accesstoken', jsonData.token);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"id": "56005a80-a375-4fd0-82dd-9b9355ded68b"
+					}
+				}
+			],
+			"id": "9ed46f77-a03f-4d0b-9929-61044ac7e926",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"Energy75\",\n  \"userLoginEmail\": \"dshobanamca@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{BaseUrl}}/login",
+				"description": "This API endpoint is used to perform a login operation. It is an HTTP POST request sent to the {{BaseUrl}}/login URL.\n\nThe request should include the necessary parameters required for authentication. The server will validate the provided credentials and return a response.\n\nThe last execution of this request returned a response with a status code of 200. The response body included the following properties:\n\n- \"token\": This property represents the authentication token generated by the server.\n- \"type\": This property indicates the type of authentication used.\n- \"userId\": This property contains the unique identifier of the logged-in user.\n- \"loginUserEmail\": This property holds the email address of the logged-in user.\n- \"roles\": This property is an array that specifies the roles assigned to the user.\n    \n\nHere are some example responses for this request:\n\n- Response 1:\n    \n    ```\n          {\n            \"loginUserEmail\": \"\",\n            \"roles\": [\"\"],\n            \"token\": \"\",\n            \"type\": \"\",\n            \"userId\": \"\"\n          }\n    \n     ```\n    \n\nPlease note that the specific values in the response may vary based on the user's credentials and the server's configuration.\n\nTo use this endpoint, send an HTTP POST request to the {{BaseUrl}}/login URL and include the required authentication parameters in the request body. The server will validate the credentials and return the authentication token along with other relevant information in the response."
+			},
+			"response": [
+				{
+					"id": "3b0516f1-04c9-4733-8df9-8a52f4e54092",
+					"name": "OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"<string>\",\n  \"userLoginEmail\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/login"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"loginUserEmail\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"token\": \"<string>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<long>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "UnHappy Path_Create New Patient with empty values for all the mandatory entities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Verify Status code is 400', function () {",
+							"    pm.response.to.have.status(400);",
+							"})",
+							"",
+							"pm.test(\"Verify the status message - Bad Request\", function () {",
+							"    pm.response.to.have.status(\"Bad Request\");",
+							"});",
+							"",
+							"pm.test(\"Verify the error messages when the request body send as empty\", function () {",
+							"    pm.response.body;",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Verify errorCode - INVALID_REQ_DATA\", function () { ",
+							"    pm.expect(jsonData.errorCode).includes('INVALID_REQ_DATA');",
+							"});",
+							"",
+							"pm.test(\"Verify all the error messages - User First Name is Mandatory, User Last Name is Mandatory!, Contact number should contain 10 digits, Invalid Email Id!, Food category required!, Allergy information required! \", function () { ",
+							"    pm.expect(jsonData.errorMessage).includes('User First Name is Mandatory!');",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"id": "cf000d34-49e1-4589-90ff-1d621435b8b6"
+					}
+				}
+			],
+			"id": "2d6b6cd1-6efe-4913-ab38-7053bcec70c5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "patientInfo",
+							"value": "{\n  \"FirstName\": \"\",\n  \"LastName\": \"\",\n   \"ContactNumber\": \"\",\n    \"Email\": \"\",\n    \"Allergy\": \"\",\n     \"FoodCategory\": \"\",\n    \"DateOfBirth\": \"\"\n\t\n}\n",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{BaseUrl}}/patient",
+				"description": "Negative Test\n\nThis API endpoint allows you to add a new patient to the system. It is a POST request to the `{{BaseUrl}}/patient` URL.\n\n### Request Parameters\n\nSend the Request Body as empty\n\n### Response\n\nThe response will include the status code 400 and an error message bad request in case of failure.\n\nThe response body included an `errorCode` and an `errorMessage` field, but the values were not provided in the example.\n\n{ \"errorCode\": \"INVALID_REQ_DATA\",\n\n\"errorMessage\": \"User Last Name is Mandatory!\\\\n Date of Birth is Mandatory!\\\\n Allergy information required!\\\\n User First Name is Mandatory!\\\\n Invalid food catgory: Must be one of the categories in {VEGAN, VEGETARIAN, JAIN, EGGETARIAN, NONVEG}\\\\n Invalid Email Id!\\\\n Food category required!\\\\n Contact number should contain 10 digits\\\\n \"\n\n}"
+			},
+			"response": [
+				{
+					"id": "1e230441-7c81-430d-85bb-04c56391a032",
+					"name": "Service unavailable",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"Timothy\",\n  \"LastName\": \"Ran\",\n   \"ContactNumber\": \"1122334455\",\n    \"Email\": \"ran@gmail.com\",\n    \"Allergy\": \"peanut\",\n     \"FoodCategory\": \"Jain\",\n    \"DateOfBirth\": \"1999-10-20\"\n\t\n}\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Service Unavailable",
+					"code": 503,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 23:27:20 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "506"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700177211&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=aE3pvXQxwipiGEIy4vuZzhvu6FOeRyA2%2F20vBMMmia8%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700177211&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=aE3pvXQxwipiGEIy4vuZzhvu6FOeRyA2%2F20vBMMmia8%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n        <meta charset=\"utf-8\">\n        <title>Application Error</title>\n        <style media=\"screen\">\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t</style>\n    </head>\n    <body>\n        <iframe src=\"//www.herokucdn.com/error-pages/application-error.html\"></iframe>\n    </body>\n</html>"
+				},
+				{
+					"id": "4c6b2594-1c71-469d-9a56-e20827ab271f",
+					"name": "Request Body with empty values",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"\",\n  \"LastName\": \"\",\n   \"ContactNumber\": \"\",\n    \"Email\": \"\",\n    \"Allergy\": \"\",\n     \"FoodCategory\": \"\",\n    \"DateOfBirth\": \"\"\n\t\n}\n",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": [
+										"QZAqktmlD/HyperThyroid_Report_final.pdf"
+									]
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700495379&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=0NStol5cZ9HNT2tZUKzLXLKw0XBlcrwjRyXZWN%2Fts9E%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700495379&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=0NStol5cZ9HNT2tZUKzLXLKw0XBlcrwjRyXZWN%2Fts9E%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 20 Nov 2023 15:49:39 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"errorCode\": \"INVALID_REQ_DATA\",\n    \"errorMessage\": \"Date of Birth is Mandatory!\\n User First Name is Mandatory!\\n Invalid food catgory: Must be one of the categories in {VEGAN, VEGETARIAN, JAIN, EGGETARIAN, NONVEG}\\n Allergy information required!\\n Contact number should contain 10 digits\\n Invalid Email Id!\\n Food category required!\\n User Last Name is Mandatory!\\n \"\n}"
+				},
+				{
+					"id": "1e1f0d58-a635-4eeb-9c7b-dbb1f98632bb",
+					"name": "Request Body with Invalid Data",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"\",\n  \"LastName\": \"Chandar\",\n   \"ContactNumber\": \"fdfdfd\",\n    \"Email\": \"uday@gmail.com\",\n    \"Allergy\": \"\",\n     \"FoodCategory\": \"vegan\",\n    \"DateOfBirth\": \"2000-11-12\"\n\t\n}\n",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": [
+										"dFgWnIG7o/Hypo Thyroid-Report.pdf.pdf"
+									]
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700496569&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=%2BDWs3zuBKO8sQsyWPNNKDwbeQaTCI4fOxVq9cib%2FKck%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700496569&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=%2BDWs3zuBKO8sQsyWPNNKDwbeQaTCI4fOxVq9cib%2FKck%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 20 Nov 2023 16:09:29 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"errorCode\": \"INVALID_REQ_DATA\",\n    \"errorMessage\": \"User First Name is Mandatory!\\n Allergy information required!\\n Contact number should contain 10 digits\\n \"\n}"
+				},
+				{
+					"id": "32fe90dc-1f8b-47c3-947e-3ab294f26c1b",
+					"name": "Dupicate Entity validation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"Suvi\",\n  \"LastName\": \"Raj\",\n   \"ContactNumber\": \"9999988888\",\n    \"Email\": \"suvi@gmail.com\",\n    \"Allergy\": \"milk\",\n     \"FoodCategory\": \"vegan\",\n    \"DateOfBirth\": \"2000-02-14\"\n\t\n}\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700496689&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=4rXrMyS9GOQqfnOIt1EVsGaWiluhCFw3xgmjB5m6img%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700496689&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=4rXrMyS9GOQqfnOIt1EVsGaWiluhCFw3xgmjB5m6img%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 20 Nov 2023 16:11:29 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"errorCode\": \"DUPLICATE_ENTITY\",\n    \"errorMessage\": \"Patient already exists with given DateOfBirth and ContactNumber\"\n}"
+				}
+			]
+		},
+		{
+			"name": "HappyPath_Create New Patient_ Verify Dietician able to create a new patient with all valid input data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Verify Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test('Set Patient ID', function () {",
+							"    var jsonData = pm.response.json();",
+							"    console.log(jsonData.patientId);",
+							"    pm.globals.set('patId', jsonData.patientId);",
+							"})"
+						],
+						"type": "text/javascript",
+						"id": "d2914661-6b26-41ed-be84-03699e9dfacd"
+					}
+				}
+			],
+			"id": "e553d589-6abc-4aba-a131-fc29f09bb937",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "patientInfo",
+							"value": "{\n  \"FirstName\": \"Archana\",\n  \"LastName\": \"Pal\",\n   \"ContactNumber\": \"7799988888\",\n    \"Email\": \"pal@gmail.com\",\n    \"Allergy\": \"milk\",\n     \"FoodCategory\": \"vegan\",\n    \"DateOfBirth\": \"2001-02-14\"\n\t\n}\n",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{BaseUrl}}/patient"
+			},
+			"response": [
+				{
+					"id": "ef9bae41-a3f8-46be-8f71-80586243f346",
+					"name": "OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/patient?patientInfo=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patient"
+							],
+							"query": [
+								{
+									"key": "patientInfo",
+									"value": "<string>"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"Allergy\": \"<string>\",\n  \"ContactNumber\": \"<string>\",\n  \"DateOfBirth\": \"<dateTime>\",\n  \"DieticianId\": \"<integer>\",\n  \"Email\": \"<string>\",\n  \"FileMorbidity\": {\n    \"nostrud_e93\": {\n      \"amet524\": \"<string>\"\n    }\n  },\n  \"FileMorbidityCondition\": {\n    \"aliquip7\": \"<string>\",\n    \"consequat_d5c\": \"<string>\"\n  },\n  \"FirstName\": \"<string>\",\n  \"FoodCategory\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"patientId\": \"<long>\"\n}"
+				},
+				{
+					"id": "e194c959-3e77-4a2c-b642-8f8bfa50f589",
+					"name": "Create New Patient",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"Swapna\",\n  \"LastName\": \"Mandlagiri\",\n  \"ContactNumber\": \"1234567890\",\n  \"Email\": \"abc@gmail.com\",\n  \"Allergy\": \"Milk\",\n  \"FoodCategory\": \"Vegan\",\n  \"DateOfBirth\": \"2001-01-05\"\n}",
+									"description": "file",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/patient?patientId=465",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"patient"
+							],
+							"query": [
+								{
+									"key": "patientId",
+									"value": "465"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700154004&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=ptutDJW4VlpAk7sxstfSnoHGrd5hgkEpvm%2B93csVyGM%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700154004&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=ptutDJW4VlpAk7sxstfSnoHGrd5hgkEpvm%2B93csVyGM%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:00:04 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"patientId\": 465,\n    \"FirstName\": \"Swapna\",\n    \"LastName\": \"Mandlagiri\",\n    \"ContactNumber\": \"1234567890\",\n    \"Email\": \"abc@gmail.com\",\n    \"Allergy\": \"Milk\",\n    \"FoodCategory\": \"Vegan\",\n    \"DateOfBirth\": \"2001-01-05T00:00:00.000+00:00\",\n    \"DieticianId\": 147\n}"
+				},
+				{
+					"id": "3502b547-7879-4a72-ab62-bdd6b499a97f",
+					"name": "Create New Patient",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"Keerthika\",\n  \"LastName\": \"Rajendran\",\n  \"ContactNumber\": \"1234567880\",\n  \"Email\": \"abcd@gmail.com\",\n  \"Allergy\": \"Soy\",\n  \"FoodCategory\": \"Vegetarian\",\n  \"DateOfBirth\": \"2002-02-05\"\n}",
+									"description": "file",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700154946&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=m1H9CcxfeqIsAO0iWyGbQSQvwpTZW0WwPTKANjZsfNs%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700154946&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=m1H9CcxfeqIsAO0iWyGbQSQvwpTZW0WwPTKANjZsfNs%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:15:46 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"patientId\": 470,\n    \"FirstName\": \"Keerthika\",\n    \"LastName\": \"Rajendran\",\n    \"ContactNumber\": \"1234567880\",\n    \"Email\": \"abcd@gmail.com\",\n    \"Allergy\": \"Soy\",\n    \"FoodCategory\": \"Vegetarian\",\n    \"DateOfBirth\": \"2002-02-05T00:00:00.000+00:00\",\n    \"DieticianId\": 147\n}"
+				},
+				{
+					"id": "c57492e9-0763-497b-be59-fb394ca3e3aa",
+					"name": "Create New Patient",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"shiipa\",\n  \"LastName\": \"Rajen\",\n  \"ContactNumber\": \"1234567980\",\n  \"Email\": \"abcde@gmail.com\",\n  \"Allergy\": \"Soy\",\n  \"FoodCategory\": \"Vegetarian\",\n  \"DateOfBirth\": \"2003-02-05\"\n}",
+									"description": "file",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700156339&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=D8P7H5Q4NGerVVeW5lOReb%2Bz%2FR1fX6KO7Hl8y9oLz7k%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700156339&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=D8P7H5Q4NGerVVeW5lOReb%2Bz%2FR1fX6KO7Hl8y9oLz7k%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:38:59 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"patientId\": 490,\n    \"FirstName\": \"shiipa\",\n    \"LastName\": \"Rajen\",\n    \"ContactNumber\": \"1234567980\",\n    \"Email\": \"abcde@gmail.com\",\n    \"Allergy\": \"Soy\",\n    \"FoodCategory\": \"Vegetarian\",\n    \"DateOfBirth\": \"2003-02-05T00:00:00.000+00:00\",\n    \"DieticianId\": 147\n}"
+				},
+				{
+					"id": "364d23b3-41af-4787-81b3-0c0065395117",
+					"name": "Create New Patient",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"shilpa\",\n  \"LastName\": \"Rajen\",\n  \"ContactNumber\": \"2234567980\",\n  \"Email\": \"abcde@gmail.com\",\n  \"Allergy\": \"Soy\",\n  \"FoodCategory\": \"Vegetarian\",\n  \"DateOfBirth\": \"2004-02-05\"\n}",
+									"description": "file",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700156524&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=17BN35cyKI4IUkbA%2BA9K5bYQRptfinp7PfvUy%2BRXKls%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700156524&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=17BN35cyKI4IUkbA%2BA9K5bYQRptfinp7PfvUy%2BRXKls%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:42:04 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"patientId\": 492,\n    \"FirstName\": \"shilpa\",\n    \"LastName\": \"Rajen\",\n    \"ContactNumber\": \"2234567980\",\n    \"Email\": \"abcde@gmail.com\",\n    \"Allergy\": \"Soy\",\n    \"FoodCategory\": \"Vegetarian\",\n    \"DateOfBirth\": \"2004-02-05T00:00:00.000+00:00\",\n    \"DieticianId\": 147\n}"
+				},
+				{
+					"id": "ece0f72b-139c-43e9-80bf-dd51ab8a8514",
+					"name": "Create New Patient",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"Jason\",\n  \"LastName\": \"Richard\",\n   \"ContactNumber\": \"1122334455\",\n    \"Email\": \"jason@gmail.com\",\n    \"Allergy\": \"peanut\",\n     \"FoodCategory\": \"vegan\",\n    \"DateOfBirth\": \"1999-10-20\"\n\t\n}\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700170250&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=zPV0LHVMlSPiWMkIGBE5PK7VJJZ0mG%2FgBjXQQtxtMhM%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700170250&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=zPV0LHVMlSPiWMkIGBE5PK7VJJZ0mG%2FgBjXQQtxtMhM%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 21:30:50 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"patientId\": 612,\n    \"FirstName\": \"Jason\",\n    \"LastName\": \"Richard\",\n    \"ContactNumber\": \"1122334455\",\n    \"Email\": \"jason@gmail.com\",\n    \"Allergy\": \"peanut\",\n    \"FoodCategory\": \"vegan\",\n    \"DateOfBirth\": \"1999-10-20T00:00:00.000+00:00\",\n    \"DieticianId\": 145\n}"
+				}
+			]
+		},
+		{
+			"name": "UnHappy Path_Create duplicate patient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Verify Status code is 400', function () {",
+							"    pm.response.to.have.status(400);",
+							"})",
+							"",
+							"pm.test(\"Verify the status message - Bad Request\", function () {",
+							"    pm.response.to.have.status(\"Bad Request\");",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Verify errorCode - DUPLICATE_ENTITY\", function () { ",
+							"    pm.expect(jsonData.errorCode).includes('DUPLICATE_ENTITY');",
+							"});",
+							"",
+							"pm.test(\"Verify the validation when try to add a duplicate data entity - DUPLICATE_ENTITY\", function () { ",
+							"    pm.expect(jsonData.errorMessage).includes('Patient already exists with given DateOfBirth and ContactNumber');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"id": "1fe6814b-156c-4840-ba08-e108da826763"
+					}
+				}
+			],
+			"id": "59ac61f3-3933-42e1-a1d3-93cb7ffffdaf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "patientInfo",
+							"value": "{\n  \"FirstName\": \"Archana\",\n  \"LastName\": \"Pal\",\n   \"ContactNumber\": \"7799988888\",\n    \"Email\": \"pal@gmail.com\",\n    \"Allergy\": \"milk\",\n     \"FoodCategory\": \"vegan\",\n    \"DateOfBirth\": \"2001-02-14\"\n\t\n}\n",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{BaseUrl}}/patient",
+				"description": "Negative Test\n\nThis API endpoint allows you to add a new patient to the system. It is a POST request to the `{{BaseUrl}}/patient` URL.\n\n### Request Parameters\n\nSend the Request Body as empty\n\n### Response\n\nThe response will include the status code 400 and an error message bad request in case of failure.\n\nThe response body included an `errorCode` and an `errorMessage` field, but the values were not provided in the example.\n\n{ \"errorCode\": \"INVALID_REQ_DATA\",\n\n\"errorMessage\": \"User Last Name is Mandatory!\\\\n Date of Birth is Mandatory!\\\\n Allergy information required!\\\\n User First Name is Mandatory!\\\\n Invalid food catgory: Must be one of the categories in {VEGAN, VEGETARIAN, JAIN, EGGETARIAN, NONVEG}\\\\n Invalid Email Id!\\\\n Food category required!\\\\n Contact number should contain 10 digits\\\\n \"\n\n}"
+			},
+			"response": [
+				{
+					"id": "e7b60aad-54b8-4403-a8ee-7a16d7a6c413",
+					"name": "Dupicate Entity validation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"Suvi\",\n  \"LastName\": \"Raj\",\n   \"ContactNumber\": \"9999988888\",\n    \"Email\": \"suvi@gmail.com\",\n    \"Allergy\": \"milk\",\n     \"FoodCategory\": \"vegan\",\n    \"DateOfBirth\": \"2000-02-14\"\n\t\n}\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700496689&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=4rXrMyS9GOQqfnOIt1EVsGaWiluhCFw3xgmjB5m6img%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700496689&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=4rXrMyS9GOQqfnOIt1EVsGaWiluhCFw3xgmjB5m6img%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 20 Nov 2023 16:11:29 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"errorCode\": \"DUPLICATE_ENTITY\",\n    \"errorMessage\": \"Patient already exists with given DateOfBirth and ContactNumber\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Patient info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test('Verify Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"id": "1162c0ec-d30f-4b07-800b-451c213d7538"
+					}
+				}
+			],
+			"id": "a1865dc7-a9c5-44d8-87cc-67f72cb496f8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "patientInfo",
+							"value": "{\n  \"FirstName\": \"Archana\",\n  \"LastName\": \"Pandian\",\n   \"ContactNumber\": \"7766988888\",\n    \"Email\": \"pandian@gmail.com\",\n    \"Allergy\": \"milk\",\n     \"FoodCategory\": \"vegan\",\n    \"DateOfBirth\": \"2001-02-14\"\n\t\n}\n",
+							"description": "file",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "Za_VFmPRS/Hypo Thyroid-Report.pdf.pdf"
+						}
+					]
+				},
+				"url": "{{BaseUrl}}/patient/{{patId}}"
+			},
+			"response": [
+				{
+					"id": "4d654caf-a024-46a4-b3f2-37379357b0fa",
+					"name": "OK",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/patient/:patientId?patientInfo=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patient",
+								":patientId"
+							],
+							"query": [
+								{
+									"key": "patientInfo",
+									"value": "<string>"
+								}
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "<long>",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"Allergy\": \"<string>\",\n  \"ContactNumber\": \"<string>\",\n  \"DateOfBirth\": \"<dateTime>\",\n  \"DieticianId\": \"<integer>\",\n  \"Email\": \"<string>\",\n  \"FileMorbidity\": {\n    \"nostrud_e93\": {\n      \"amet524\": \"<string>\"\n    }\n  },\n  \"FileMorbidityCondition\": {\n    \"aliquip7\": \"<string>\",\n    \"consequat_d5c\": \"<string>\"\n  },\n  \"FirstName\": \"<string>\",\n  \"FoodCategory\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"patientId\": \"<long>\"\n}"
+				},
+				{
+					"id": "252e49bc-534a-44aa-be26-3e4984659e71",
+					"name": "Update Patient by UserId",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"Swapna\",\n  \"LastName\": \"Mandlagiri\",\n  \"ContactNumber\": \"1234567890\",\n  \"Email\": \"abc@gmail.com\",\n  \"Allergy\": \"Peanut\",\n  \"FoodCategory\": \"Vegan\",\n  \"DateOfBirth\": \"2001-01-05\"\n}",
+									"description": "file",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/patient/:patientId",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"patient",
+								":patientId"
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "465",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700155439&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=OF%2B0BnF%2BCaT9R4TQJgFGhd5D4LK39l90PLnTbDSO7FI%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700155439&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=OF%2B0BnF%2BCaT9R4TQJgFGhd5D4LK39l90PLnTbDSO7FI%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:23:59 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"patientId\": 465,\n    \"FirstName\": \"Swapna\",\n    \"LastName\": \"Mandlagiri\",\n    \"ContactNumber\": \"1234567890\",\n    \"Email\": \"abc@gmail.com\",\n    \"Allergy\": \"Peanut\",\n    \"FoodCategory\": \"Vegan\",\n    \"DateOfBirth\": \"2001-01-05T00:00:00.000+00:00\",\n    \"DieticianId\": 147\n}"
+				},
+				{
+					"id": "e9bc6633-5faa-4b2c-98a8-de0f2c566135",
+					"name": "Added report for patient",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "patientInfo",
+									"value": "{\n  \"FirstName\": \"Swapna\",\n  \"LastName\": \"Mandlagiri\",\n  \"ContactNumber\": \"1234567890\",\n  \"Email\": \"abc@gmail.com\",\n  \"Allergy\": \"Peanut\",\n  \"FoodCategory\": \"Vegan\",\n  \"DateOfBirth\": \"2001-01-05\"\n}",
+									"description": "file",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": [
+										"/C:/Users/Swapna/Downloads/HyperThyroid_Report_final.pdf"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/patient/:patientId",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"patient",
+								":patientId"
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "465",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700158325&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=lXFnVTOHWd4Sbl%2FC3EzVYCkOkupdk76z3PKwdjurSCU%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700158325&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=lXFnVTOHWd4Sbl%2FC3EzVYCkOkupdk76z3PKwdjurSCU%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 18:12:07 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"patientId\": 465,\n    \"FirstName\": \"Swapna\",\n    \"LastName\": \"Mandlagiri\",\n    \"ContactNumber\": \"1234567890\",\n    \"Email\": \"abc@gmail.com\",\n    \"Allergy\": \"Peanut\",\n    \"FoodCategory\": \"Vegan\",\n    \"FileMorbidity\": {\n        \"65565b772fbda32c2bb0eea5\": {\n            \"T4\": \"15.7 µg/dL\",\n            \"TSH\": \"0.016 µIU/mL\",\n            \"T3\": \"6.3 ng/mL\"\n        }\n    },\n    \"FileMorbidityCondition\": {\n        \"65565b772fbda32c2bb0eea5\": \"Thyroid: Hyperthyroidism \\n\"\n    },\n    \"DateOfBirth\": \"2001-01-05T00:00:00.000+00:00\",\n    \"DieticianId\": 147\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all Patients",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Verify Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript",
+						"id": "b3f9266f-6472-4322-ac69-c8fa1c193e43"
+					}
+				}
+			],
+			"id": "d3a045f8-f1d6-412e-ba62-414b0f71c5a6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": "{{BaseUrl}}/patient"
+			},
+			"response": [
+				{
+					"id": "3d99d888-f39d-452d-8815-13bba8223fe2",
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": "{{baseUrl}}/patient"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"Allergy\": \"<string>\",\n  \"ContactNumber\": \"<string>\",\n  \"DateOfBirth\": \"<dateTime>\",\n  \"DieticianId\": \"<integer>\",\n  \"Email\": \"<string>\",\n  \"FileMorbidity\": {\n    \"eiusmodc\": {\n      \"consectetur2fc\": \"<string>\"\n    }\n  },\n  \"FileMorbidityCondition\": {\n    \"in_a20\": \"<string>\",\n    \"adipisicing_f\": \"<string>\"\n  },\n  \"FirstName\": \"<string>\",\n  \"FoodCategory\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"patientId\": \"<long>\"\n}"
+				},
+				{
+					"id": "ad7247c4-6591-4de2-a1bf-70014106660d",
+					"name": "Get all Patients",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700154994&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=2PaKZQndNzbO7MH1qZxi7PYvC1TQuu9OeH7GU%2FYK2Rg%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700154994&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=2PaKZQndNzbO7MH1qZxi7PYvC1TQuu9OeH7GU%2FYK2Rg%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:16:34 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"patientId\": 465,\n        \"FirstName\": \"Swapna\",\n        \"LastName\": \"Mandlagiri\",\n        \"ContactNumber\": \"1234567890\",\n        \"Email\": \"abc@gmail.com\",\n        \"Allergy\": \"Milk\",\n        \"FoodCategory\": \"Vegan\",\n        \"DateOfBirth\": \"2001-01-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    },\n    {\n        \"patientId\": 470,\n        \"FirstName\": \"Keerthika\",\n        \"LastName\": \"Rajendran\",\n        \"ContactNumber\": \"1234567880\",\n        \"Email\": \"abcd@gmail.com\",\n        \"Allergy\": \"Soy\",\n        \"FoodCategory\": \"Vegetarian\",\n        \"DateOfBirth\": \"2002-02-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    }\n]"
+				},
+				{
+					"id": "8aee0b38-8957-4e55-b16d-a784cce0d162",
+					"name": "Get all Patients",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700156434&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=%2FOg7pZ%2F4GY2Ijk4LDszOBpDKiyfaRGOSvM9S0ivIOTg%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700156434&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=%2FOg7pZ%2F4GY2Ijk4LDszOBpDKiyfaRGOSvM9S0ivIOTg%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:40:34 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"patientId\": 465,\n        \"FirstName\": \"Swapna\",\n        \"LastName\": \"Mandlagiri\",\n        \"ContactNumber\": \"1234567890\",\n        \"Email\": \"abc@gmail.com\",\n        \"Allergy\": \"Peanut\",\n        \"FoodCategory\": \"Vegan\",\n        \"DateOfBirth\": \"2001-01-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    },\n    {\n        \"patientId\": 470,\n        \"FirstName\": \"Keerthika\",\n        \"LastName\": \"Rajendran\",\n        \"ContactNumber\": \"1234567880\",\n        \"Email\": \"abcd@gmail.com\",\n        \"Allergy\": \"Soy\",\n        \"FoodCategory\": \"Vegetarian\",\n        \"DateOfBirth\": \"2002-02-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    }\n]"
+				},
+				{
+					"id": "6ea29046-5f02-4ecc-9a96-d045009ea07f",
+					"name": "Get all Patients",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700156472&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=xffaniZ8ITnjnr1zz73Kwa6VRit24LT8N5l9Po3OuPo%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700156472&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=xffaniZ8ITnjnr1zz73Kwa6VRit24LT8N5l9Po3OuPo%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:41:12 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"patientId\": 465,\n        \"FirstName\": \"Swapna\",\n        \"LastName\": \"Mandlagiri\",\n        \"ContactNumber\": \"1234567890\",\n        \"Email\": \"abc@gmail.com\",\n        \"Allergy\": \"Peanut\",\n        \"FoodCategory\": \"Vegan\",\n        \"DateOfBirth\": \"2001-01-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    },\n    {\n        \"patientId\": 470,\n        \"FirstName\": \"Keerthika\",\n        \"LastName\": \"Rajendran\",\n        \"ContactNumber\": \"1234567880\",\n        \"Email\": \"abcd@gmail.com\",\n        \"Allergy\": \"Soy\",\n        \"FoodCategory\": \"Vegetarian\",\n        \"DateOfBirth\": \"2002-02-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    },\n    {\n        \"patientId\": 491,\n        \"FirstName\": \"shiipa\",\n        \"LastName\": \"Rajen\",\n        \"ContactNumber\": \"1234567980\",\n        \"Email\": \"abcde@gmail.com\",\n        \"Allergy\": \"Soy\",\n        \"FoodCategory\": \"Vegetarian\",\n        \"DateOfBirth\": \"2003-02-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    }\n]"
+				},
+				{
+					"id": "3edefba2-1d12-4268-bf18-6a61d9bc9f89",
+					"name": "Get all Patients",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": "{{BaseUrl}}/patient"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700156533&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=YJp%2FmvZyvcXRkSzqiHoUTIRYuGG2sWUd1f8GXGidq6E%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700156533&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=YJp%2FmvZyvcXRkSzqiHoUTIRYuGG2sWUd1f8GXGidq6E%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:42:13 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"patientId\": 465,\n        \"FirstName\": \"Swapna\",\n        \"LastName\": \"Mandlagiri\",\n        \"ContactNumber\": \"1234567890\",\n        \"Email\": \"abc@gmail.com\",\n        \"Allergy\": \"Peanut\",\n        \"FoodCategory\": \"Vegan\",\n        \"DateOfBirth\": \"2001-01-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    },\n    {\n        \"patientId\": 470,\n        \"FirstName\": \"Keerthika\",\n        \"LastName\": \"Rajendran\",\n        \"ContactNumber\": \"1234567880\",\n        \"Email\": \"abcd@gmail.com\",\n        \"Allergy\": \"Soy\",\n        \"FoodCategory\": \"Vegetarian\",\n        \"DateOfBirth\": \"2002-02-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    },\n    {\n        \"patientId\": 491,\n        \"FirstName\": \"shiipa\",\n        \"LastName\": \"Rajen\",\n        \"ContactNumber\": \"1234567980\",\n        \"Email\": \"abcde@gmail.com\",\n        \"Allergy\": \"Soy\",\n        \"FoodCategory\": \"Vegetarian\",\n        \"DateOfBirth\": \"2003-02-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    },\n    {\n        \"patientId\": 492,\n        \"FirstName\": \"shilpa\",\n        \"LastName\": \"Rajen\",\n        \"ContactNumber\": \"2234567980\",\n        \"Email\": \"abcde@gmail.com\",\n        \"Allergy\": \"Soy\",\n        \"FoodCategory\": \"Vegetarian\",\n        \"DateOfBirth\": \"2004-02-05T00:00:00.000+00:00\",\n        \"DieticianId\": 147\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get all Morbidities of Patients",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "9e785e76-a2a2-4fcb-b958-bc51f43b361d"
+					}
+				}
+			],
+			"id": "53f92685-32b1-4ea5-b8f4-c5531491bb28",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"url": "{{BaseUrl}}/morbidity"
+			},
+			"response": [
+				{
+					"id": "c5faa9ee-bcc3-44e5-aac7-3448fea44293",
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": "{{baseUrl}}/morbidity"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n  {\n    \"morbidityId\": \"<long>\",\n    \"morbidityMarkerMaxVal\": \"<float>\",\n    \"morbidityMarkerMinVal\": \"<float>\",\n    \"morbidityNameRegex\": \"<string>\",\n    \"morbidityTestId\": \"<string>\",\n    \"morbidityTestName\": \"<string>\",\n    \"morbidityTestUnit\": \"<string>\"\n  },\n  {\n    \"morbidityId\": \"<long>\",\n    \"morbidityMarkerMaxVal\": \"<float>\",\n    \"morbidityMarkerMinVal\": \"<float>\",\n    \"morbidityNameRegex\": \"<string>\",\n    \"morbidityTestId\": \"<string>\",\n    \"morbidityTestName\": \"<string>\",\n    \"morbidityTestUnit\": \"<string>\"\n  }\n]"
+				},
+				{
+					"id": "f3c8d779-89a9-4158-b071-8dbd6908c131",
+					"name": "Get all Morbidities",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": "{{BaseUrl}}/morbidity"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700157967&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=17yvVpHpSFOk1%2BxXB%2FiB8GySbw3hiYAC9r%2BBKXsIj4c%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700157967&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=17yvVpHpSFOk1%2BxXB%2FiB8GySbw3hiYAC9r%2BBKXsIj4c%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 18:06:07 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"morbidityId\": 1,\n        \"morbidityTestId\": \"DIA_FG\",\n        \"morbidityNameRegex\": \"(?i)(.*)fasting(.*)[sugarglucose](.*)|(.*)glucose(.*)fasting(.*)\",\n        \"morbidityTestName\": \"Fasting Glucose\",\n        \"morbidityTestUnit\": \"mg/dL\",\n        \"morbidityMarkerMinVal\": 100,\n        \"morbidityMarkerMaxVal\": 125\n    },\n    {\n        \"morbidityId\": 2,\n        \"morbidityTestId\": \"DIA_AG\",\n        \"morbidityNameRegex\": \"(?i)(.*)average(.*)glucose(.*)\",\n        \"morbidityTestName\": \"Average Glucose\",\n        \"morbidityTestUnit\": \"mg/dL\",\n        \"morbidityMarkerMinVal\": 121,\n        \"morbidityMarkerMaxVal\": 150\n    },\n    {\n        \"morbidityId\": 3,\n        \"morbidityTestId\": \"DIA_PG\",\n        \"morbidityNameRegex\": \"(?i)(.*)plasma(.*)glucose(.*)\",\n        \"morbidityTestName\": \"Plasma Glucose\",\n        \"morbidityTestUnit\": \"mg/dL\",\n        \"morbidityMarkerMinVal\": 140,\n        \"morbidityMarkerMaxVal\": 199\n    },\n    {\n        \"morbidityId\": 4,\n        \"morbidityTestId\": \"DIA_HBA1C\",\n        \"morbidityNameRegex\": \"(.*)HbA[1I]c(.*)|(.*)H(.*)P(.*)L(.*)C(.*)\",\n        \"morbidityTestName\": \"HbA1c\",\n        \"morbidityTestUnit\": \"%\",\n        \"morbidityMarkerMinVal\": 5.7,\n        \"morbidityMarkerMaxVal\": 6.5\n    },\n    {\n        \"morbidityId\": 5,\n        \"morbidityTestId\": \"THYRO_TSH\",\n        \"morbidityNameRegex\": \"(?i)(.*)T(.*)S(.*)H(.*)|(.*)THYROID STIMULATING HORMONE(.*)\",\n        \"morbidityTestName\": \"TSH\",\n        \"morbidityTestUnit\": \"μIU/ml\",\n        \"morbidityMarkerMinVal\": 0.55,\n        \"morbidityMarkerMaxVal\": 4.78\n    },\n    {\n        \"morbidityId\": 6,\n        \"morbidityTestId\": \"THYRO_TSH_1\",\n        \"morbidityNameRegex\": \"(?i)(.*)T(.*)S(.*)H(.*)|(.*)THYROID STIMULATING HORMONE(.*)\",\n        \"morbidityTestName\": \"TSH\",\n        \"morbidityTestUnit\": \"uIU/ml\",\n        \"morbidityMarkerMinVal\": 0.55,\n        \"morbidityMarkerMaxVal\": 4.78\n    },\n    {\n        \"morbidityId\": 7,\n        \"morbidityTestId\": \"THYRO_T3\",\n        \"morbidityNameRegex\": \"(?i)(.*)T3(.*)\",\n        \"morbidityTestName\": \"T3\",\n        \"morbidityTestUnit\": \"ng/dL\",\n        \"morbidityMarkerMinVal\": 60,\n        \"morbidityMarkerMaxVal\": 180\n    },\n    {\n        \"morbidityId\": 8,\n        \"morbidityTestId\": \"THYRO_T3_1\",\n        \"morbidityNameRegex\": \"(?i)(.*)T3(.*)\",\n        \"morbidityTestName\": \"T3\",\n        \"morbidityTestUnit\": \"ng/mL\",\n        \"morbidityMarkerMinVal\": 0.6,\n        \"morbidityMarkerMaxVal\": 1.8\n    },\n    {\n        \"morbidityId\": 9,\n        \"morbidityTestId\": \"THYRO_T3_2\",\n        \"morbidityNameRegex\": \"(?i)(.*)T3(.*)\",\n        \"morbidityTestName\": \"T3\",\n        \"morbidityTestUnit\": \"pg/mL\",\n        \"morbidityMarkerMinVal\": 1.5,\n        \"morbidityMarkerMaxVal\": 4.1\n    },\n    {\n        \"morbidityId\": 10,\n        \"morbidityTestId\": \"THYRO_T3_3\",\n        \"morbidityNameRegex\": \"(?i)(.*)T3(.*)\",\n        \"morbidityTestName\": \"T3\",\n        \"morbidityTestUnit\": \"nmol/L\",\n        \"morbidityMarkerMinVal\": 0.9,\n        \"morbidityMarkerMaxVal\": 2.76\n    },\n    {\n        \"morbidityId\": 11,\n        \"morbidityTestId\": \"THYRO_T4\",\n        \"morbidityNameRegex\": \"(?i)(.*)T4(.*)\",\n        \"morbidityTestName\": \"T4\",\n        \"morbidityTestUnit\": \"μg/dL\",\n        \"morbidityMarkerMinVal\": 5,\n        \"morbidityMarkerMaxVal\": 12\n    },\n    {\n        \"morbidityId\": 12,\n        \"morbidityTestId\": \"THYRO_T4_1\",\n        \"morbidityNameRegex\": \"(?i)(.*)T4(.*)\",\n        \"morbidityTestName\": \"T4\",\n        \"morbidityTestUnit\": \"ug/dL\",\n        \"morbidityMarkerMinVal\": 5,\n        \"morbidityMarkerMaxVal\": 12\n    },\n    {\n        \"morbidityId\": 13,\n        \"morbidityTestId\": \"THYRO_T4_2\",\n        \"morbidityNameRegex\": \"(?i)(.*)T4(.*)\",\n        \"morbidityTestName\": \"T4\",\n        \"morbidityTestUnit\": \"ng/dL\",\n        \"morbidityMarkerMinVal\": 0.8,\n        \"morbidityMarkerMaxVal\": 1.9\n    },\n    {\n        \"morbidityId\": 14,\n        \"morbidityTestId\": \"BP_LEVEL\",\n        \"morbidityNameRegex\": \"(?i)(.*)Blood(.*)Pressure(.*)\",\n        \"morbidityTestName\": \"Blood Pressure Levels\",\n        \"morbidityTestUnit\": \"mm Hg\",\n        \"morbidityMarkerMinVal\": 80,\n        \"morbidityMarkerMaxVal\": 130\n    },\n    {\n        \"morbidityId\": 15,\n        \"morbidityTestId\": \"THYRO_TSH_2\",\n        \"morbidityNameRegex\": \"(?i)(.*)T(.*)S(.*)H(.*)|(.*)THYROID STIMULATING HORMONE(.*)\",\n        \"morbidityTestName\": \"TSH\",\n        \"morbidityTestUnit\": \"mIU/L\",\n        \"morbidityMarkerMinVal\": 0.45,\n        \"morbidityMarkerMaxVal\": 4.12\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Retrieve Morbidity condition by Test name Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "76db25fc-f90c-43e5-b74d-cfa056517a75"
+					}
+				}
+			],
+			"id": "e4fc99fc-23ce-4618-9aa9-28dbc30d5d5d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/morbidity/:morbidityName",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"morbidity",
+						":morbidityName"
+					],
+					"variable": [
+						{
+							"id": "1ecdfca9-07f4-4412-8468-bd2f65a97193",
+							"key": "morbidityName",
+							"value": "TSH",
+							"description": "(Required) morbidityName"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "53e67822-e651-4ea7-9be6-fe14ed28b2b1",
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/morbidity/:morbidityName",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"morbidity",
+								":morbidityName"
+							],
+							"variable": [
+								{
+									"key": "morbidityName",
+									"value": "<string>",
+									"description": "(Required) morbidityName"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n  {\n    \"morbidityId\": \"<long>\",\n    \"morbidityMarkerMaxVal\": \"<float>\",\n    \"morbidityMarkerMinVal\": \"<float>\",\n    \"morbidityNameRegex\": \"<string>\",\n    \"morbidityTestId\": \"<string>\",\n    \"morbidityTestName\": \"<string>\",\n    \"morbidityTestUnit\": \"<string>\"\n  },\n  {\n    \"morbidityId\": \"<long>\",\n    \"morbidityMarkerMaxVal\": \"<float>\",\n    \"morbidityMarkerMinVal\": \"<float>\",\n    \"morbidityNameRegex\": \"<string>\",\n    \"morbidityTestId\": \"<string>\",\n    \"morbidityTestName\": \"<string>\",\n    \"morbidityTestUnit\": \"<string>\"\n  }\n]"
+				},
+				{
+					"id": "5815aea9-267b-4b1e-8b93-6b56826d8cc3",
+					"name": "Retrieve Morbidity condition by Test name",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{BaseUrl}}/morbidity/:morbidityName",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"morbidity",
+								":morbidityName"
+							],
+							"variable": [
+								{
+									"key": "morbidityName",
+									"value": "TSH",
+									"description": "(Required) morbidityName"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700158120&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=PEGrUnU38Hx2vgiDrm%2FUHvgZ8eWFuhUJN%2FY1Jl62fks%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700158120&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=PEGrUnU38Hx2vgiDrm%2FUHvgZ8eWFuhUJN%2FY1Jl62fks%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 18:08:40 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"morbidityId\": 5,\n        \"morbidityTestId\": \"THYRO_TSH\",\n        \"morbidityNameRegex\": \"(?i)(.*)T(.*)S(.*)H(.*)|(.*)THYROID STIMULATING HORMONE(.*)\",\n        \"morbidityTestName\": \"TSH\",\n        \"morbidityTestUnit\": \"μIU/ml\",\n        \"morbidityMarkerMinVal\": 0.55,\n        \"morbidityMarkerMaxVal\": 4.78\n    },\n    {\n        \"morbidityId\": 6,\n        \"morbidityTestId\": \"THYRO_TSH_1\",\n        \"morbidityNameRegex\": \"(?i)(.*)T(.*)S(.*)H(.*)|(.*)THYROID STIMULATING HORMONE(.*)\",\n        \"morbidityTestName\": \"TSH\",\n        \"morbidityTestUnit\": \"uIU/ml\",\n        \"morbidityMarkerMinVal\": 0.55,\n        \"morbidityMarkerMaxVal\": 4.78\n    },\n    {\n        \"morbidityId\": 15,\n        \"morbidityTestId\": \"THYRO_TSH_2\",\n        \"morbidityNameRegex\": \"(?i)(.*)T(.*)S(.*)H(.*)|(.*)THYROID STIMULATING HORMONE(.*)\",\n        \"morbidityTestName\": \"TSH\",\n        \"morbidityTestUnit\": \"mIU/L\",\n        \"morbidityMarkerMinVal\": 0.45,\n        \"morbidityMarkerMaxVal\": 4.12\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Delete Patient by UserId Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify Patient deleted Successfully\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"deleted Successfully\");\r",
+							"    console.log(pm.response.body);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "84a96c68-3656-4bfc-95d2-f5d6dc4b29a3"
+					}
+				}
+			],
+			"id": "93680257-a8b4-4986-8622-7d89292c14a9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"url": "{{BaseUrl}}/patient/{{patId}}"
+			},
+			"response": [
+				{
+					"id": "98d8c6df-9713-4194-ac83-94fd7351b3bb",
+					"name": "OK",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/patient/:patientId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patient",
+								":patientId"
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "<long>",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"body\": \"<object>\",\n  \"statusCode\": \"<string>\",\n  \"statusCodeValue\": \"<integer>\"\n}"
+				},
+				{
+					"id": "e49fb299-4d99-4b9e-8a8c-1718a3121f76",
+					"name": "Delete Patient by UserId",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{BaseUrl}}/patient/:patientId",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"patient",
+								":patientId"
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "490",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700156412&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=C9k%2B1Y4Fxc2sSh4oIXK6y%2BWqTjnWHpwyFCws%2Fqq9pGo%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700156412&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=C9k%2B1Y4Fxc2sSh4oIXK6y%2BWqTjnWHpwyFCws%2Fqq9pGo%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:40:12 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "Patient with Id 490 deleted Successfully!"
+				},
+				{
+					"id": "d1567c10-81d3-465e-8768-2426e172652f",
+					"name": "Delete Patient by UserId",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{BaseUrl}}/patient/:patientId",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"patient",
+								":patientId"
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "491",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700156557&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=yAnWo0lqUxp9xvxthRChbpu43GXPHlhSnMu2VPF7o50%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700156557&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=yAnWo0lqUxp9xvxthRChbpu43GXPHlhSnMu2VPF7o50%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 17:42:37 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "Patient with Id 491 deleted Successfully!"
+				},
+				{
+					"id": "9e020246-ddfe-43f5-bd7f-381c5ec6b629",
+					"name": "Negative test for delete",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{BaseUrl}}/patient/:patientId",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"patient",
+								":patientId"
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "491",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700157706&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=7ISDUy58A%2BnutRVIlOgrJi9NQV8kFv%2FaxyiglGeIm4o%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700157706&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=7ISDUy58A%2BnutRVIlOgrJi9NQV8kFv%2FaxyiglGeIm4o%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 18:01:46 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n    \"errorCode\": \"NOT_FOUND\",\n    \"errorMessage\": \"Patient not found with patientId : 491\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Patient Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test('Verify Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Verify User Id is a number\", function () {\r",
+							"    \r",
+							"    pm.expect(jsonData.userId).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test('Verify token is not empty', function () {\r",
+							"    pm.expect(jsonData.token).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify loginUserEmail is not empty', function () {\r",
+							"    pm.expect(jsonData.loginUserEmail).to.exist;\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify roles is an array', function () {\r",
+							"    pm.expect(jsonData.roles).to.be.an('array');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify User Role, is ROLE_PATIENT', () => {\r",
+							"    pm.expect(jsonData.roles).to.include(\"ROLE_PATIENT\");\r",
+							" \r",
+							"})\r",
+							"\r",
+							"pm.test('Set Patient token', function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(jsonData.token);\r",
+							"    pm.globals.set('patToken', jsonData.token);\r",
+							"})"
+						],
+						"type": "text/javascript",
+						"id": "168e626f-47d1-41b3-b3d2-7e3f908a4992"
+					}
+				}
+			],
+			"id": "02e1f595-b6e2-47a2-88c9-58323b4efc1c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"test\",\n  \"userLoginEmail\": \"buvi@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{BaseUrl}}/login"
+			},
+			"response": [
+				{
+					"id": "9e812924-580b-41b2-9f0c-9ca253a68685",
+					"name": "OK",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"password\": \"<string>\",\n  \"userLoginEmail\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/login"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"loginUserEmail\": \"<string>\",\n  \"roles\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"token\": \"<string>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<long>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Patients Morbidity Details Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test('Set fileId', function () { ",
+							"    var jsonData = pm.response.json(); ",
+							"    console.log(jsonData[0].fileId);",
+							"    pm.globals.set('patfileId', jsonData[0].fileId);",
+							"    //  console.log(jsonData.fileId);",
+							"",
+							"})"
+						],
+						"type": "text/javascript",
+						"id": "c5d84091-e685-4e57-8bc9-17a723e0230f"
+					}
+				}
+			],
+			"id": "33d04787-432f-462e-8344-8c53fb499a76",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{patToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}/patient/testReports/:patientId",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"patient",
+						"testReports",
+						":patientId"
+					],
+					"variable": [
+						{
+							"id": "3e7478af-039b-4f1b-980b-fc3f9b939a33",
+							"key": "patientId",
+							"value": "4021"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"id": "7e19eb50-c20d-4707-b377-9771af60566e",
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/patient/testReports/:patientId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"patient",
+								"testReports",
+								":patientId"
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "<long>",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"body\": \"<object>\",\n  \"statusCode\": \"<string>\",\n  \"statusCodeValue\": \"<integer>\"\n}"
+				},
+				{
+					"id": "1f5d0749-984c-4efe-87d5-9602da573be0",
+					"name": "Get Patients Morbidity Details",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{BaseUrl}}/patient/testReports/:patientId",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"patient",
+								"testReports",
+								":patientId"
+							],
+							"variable": [
+								{
+									"key": "patientId",
+									"value": "465",
+									"description": "(Required) patientId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Cowboy"
+						},
+						{
+							"key": "Report-To",
+							"value": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1700159699&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=g6h4h4fXlL8%2FW7rJYVNFjIT4Uvn3mDS44pjUeGBdEQY%3D\"}]}"
+						},
+						{
+							"key": "Reporting-Endpoints",
+							"value": "heroku-nel=https://nel.heroku.com/reports?ts=1700159699&sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&s=g6h4h4fXlL8%2FW7rJYVNFjIT4Uvn3mDS44pjUeGBdEQY%3D"
+						},
+						{
+							"key": "Nel",
+							"value": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 16 Nov 2023 18:34:59 GMT"
+						},
+						{
+							"key": "Via",
+							"value": "1.1 vegur"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "[\n    {\n        \"fileId\": \"65565b772fbda32c2bb0eea5\",\n        \"fileName\": \"HyperThyroid_Report_final.pdf\",\n        \"uploadDate\": \"2023-11-16T18:12:07.695+00:00\",\n        \"morbidConditions\": {\n            \"T4\": \"15.7 µg/dL\",\n            \"TSH\": \"0.016 µIU/mL\",\n            \"T3\": \"6.3 ng/mL\"\n        },\n        \"morbidConditionStr\": \"Thyroid: Hyperthyroidism \\n\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Retrieve Patient file by FileId Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "4df5a7a7-1d63-49fb-a534-b500d8d9dab9"
+					}
+				}
+			],
+			"id": "a4680de2-f615-4b11-970d-53994596b938",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{patToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"url": "{{BaseUrl}}/patient/testReports/viewFile/{{patfileId}}"
+			},
+			"response": [
+				{
+					"id": "32a1c4a0-6c50-4c4a-abd9-3ee719c3969f",
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": {
+							"raw": "{{BaseUrl}}/patient/testReports/viewFile/:fileId",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"patient",
+								"testReports",
+								"viewFile",
+								":fileId"
+							],
+							"variable": [
+								{
+									"key": "fileId",
+									"value": "<string>",
+									"description": "(Required) fileId"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "{\n  \"body\": \"<object>\",\n  \"statusCode\": \"<string>\",\n  \"statusCodeValue\": \"<integer>\"\n}"
+				}
+			]
+		},
+		{
+			"name": "User Logout Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify the message -  Logout successful\", function () {",
+							"    pm.response.body;",
+							"});"
+						],
+						"type": "text/javascript",
+						"id": "11eff1f9-3ef6-4946-84c9-5770fa89b7ad"
+					}
+				}
+			],
+			"id": "85ecf69b-a361-4631-bada-99212197ba94",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{Accesstoken}}"
+					}
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					}
+				],
+				"url": "{{BaseUrl}}/logoutdietician"
+			},
+			"response": [
+				{
+					"id": "b8de852e-ba40-48a7-b1dd-80df80afffa7",
+					"name": "OK",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: apikey",
+								"key": "Authorization",
+								"value": "<API Key>"
+							}
+						],
+						"url": "{{baseUrl}}/logoutdietician"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "*/*"
+						}
+					],
+					"cookie": [],
+					"responseTime": null,
+					"body": "<string>"
+				}
+			]
+		}
+	]
+}
