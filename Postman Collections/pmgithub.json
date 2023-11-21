@@ -2887,15 +2887,15 @@
 					}
 				],
 				"url": {
-					"raw": "{{BaseUrl}}/patient/?patientId=711",
+					"raw": "{{BaseUrl}}/patient/:patientId",
 					"host": [
 						"{{BaseUrl}}"
 					],
 					"path": [
 						"patient",
-						""
+						":patientId"
 					],
-					"query": [
+					"variable": [
 						{
 							"key": "patientId",
 							"value": "711"
