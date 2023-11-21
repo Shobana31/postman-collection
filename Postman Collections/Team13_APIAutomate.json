@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "64483439-3e87-466d-93f1-f95e20d3d972",
-		"name": "DieticianE2EFlow",
+		"name": "DieticianAPIIntegration",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
@@ -2852,6 +2852,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "84a96c68-3656-4bfc-95d2-f5d6dc4b29a3",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
@@ -2863,8 +2864,7 @@
 							"    console.log(pm.response.body);\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"id": "84a96c68-3656-4bfc-95d2-f5d6dc4b29a3"
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -2886,7 +2886,23 @@
 						"value": "*/*"
 					}
 				],
-				"url": "{{BaseUrl}}/patient/{{patId}}"
+				"url": {
+					"raw": "{{BaseUrl}}/patient/{{patId}}?patientId=711",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"patient",
+						"{{patId}}"
+					],
+					"query": [
+						{
+							"key": "patientId",
+							"value": "711",
+							"type": "text"
+						}
+					]
+				}
 			},
 			"response": [
 				{
